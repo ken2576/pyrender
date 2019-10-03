@@ -354,7 +354,8 @@ class Renderer(object):
                 )
 
                 # Next, bind the lighting
-                if not (flags & RenderFlags.DEPTH_ONLY or flags & RenderFlags.FLAT):
+                if not (flags & RenderFlags.DEPTH_ONLY or flags & RenderFlags.FLAT or \
+                    flags & RenderFlags.DISOCCLUSION):
                     self._bind_lighting(scene, program, node, flags)
 
                 # Finally, bind and draw the primitive
@@ -872,7 +873,8 @@ class Renderer(object):
 
         if (bool(program_flags & ProgramFlags.USE_MATERIAL) and
                 not flags & RenderFlags.DEPTH_ONLY and
-                not flags & RenderFlags.FLAT):
+                not flags & RenderFlags.FLAT and
+                not flags & RenderFlags.DISOCCLUSION):
             vertex_shader = 'mesh.vert'
             fragment_shader = 'mesh.frag'
         elif bool(program_flags & (ProgramFlags.VERTEX_NORMALS |
@@ -886,6 +888,10 @@ class Renderer(object):
         elif flags & RenderFlags.FLAT:
             vertex_shader = 'flat.vert'
             fragment_shader = 'flat.frag'
+        elif flags & RenderFlags.DISOCCLUSION:
+            vertex_shader = 'disocclusion.vert'
+            geometry_shader = 'disocclusion.geom'
+            fragment_shader = 'disocclusion.frag'
         else:
             vertex_shader = 'mesh_depth.vert'
             fragment_shader = 'mesh_depth.frag'
@@ -1201,7 +1207,9 @@ class Renderer(object):
                 )
 
                 # Next, bind the lighting
-                if not flags & RenderFlags.DEPTH_ONLY and not flags & RenderFlags.FLAT:
+                if not flags & RenderFlags.DEPTH_ONLY and \
+                    not flags & RenderFlags.FLAT and \
+                    not flags & RenderFlags.DISOCCLUSION:
                     self._bind_lighting(scene, program, node, flags)
 
                 # Finally, bind and draw the primitive

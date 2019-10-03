@@ -51,6 +51,8 @@ class RenderFlags(object):
     """Render the color buffer with the alpha channel enabled."""
     FLAT = 4096
     """Render the color buffer flat, with no lighting computations."""
+    DISOCCLUSION = 8192
+    """Render the disocclusion region mask."""
 
 
 class TextAlign:

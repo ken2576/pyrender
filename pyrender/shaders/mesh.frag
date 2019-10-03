@@ -150,7 +150,7 @@ const float min_roughness = 0.04;
 ///////////////////////////////////////////////////////////////////////////////
 vec4 srgb_to_linear(vec4 srgb)
 {
-#ifndef SRGB_CORRECTED
+#if 0
     // Fast Approximation
     //vec3 linOut = pow(srgbIn.xyz,vec3(2.2));
     //
@@ -443,7 +443,7 @@ void main()
     color *= color_multiplier;
 #endif
 
-    frag_color = clamp(vec4(pow(color.xyz, vec3(1.0/2.2)), color.a * base_color.a), 0.0, 1.0);
+    frag_color = clamp(vec4(pow(color.xyz, vec3(1.0)), color.a * base_color.a), 0.0, 1.0);
 
 #else
     // TODO GLOSSY MATERIAL BRDF

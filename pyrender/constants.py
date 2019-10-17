@@ -53,6 +53,8 @@ class RenderFlags(object):
     """Render the color buffer flat, with no lighting computations."""
     DISOCCLUSION = 8192
     """Render the disocclusion region mask."""
+    UV = 16384
+    """Render the UV map."""
 
 
 class TextAlign:
